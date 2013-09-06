@@ -195,14 +195,26 @@ private ["_aiunit","_xpos","_ypos","_unitpos","_aiGroup","_wppos","_wpradius","_
 		
 		
         //set skills
+        /*
         _aiunit setSkill ["aimingAccuracy",0.6];
         _aiunit setSkill ["aimingShake",0.7];
-        _aiunit setSkill ["aimingSpeed",0.7];
+        _aiunit setSkill ["aimingSpeed",0.8];
         _aiunit setSkill ["endurance",0.9];
         _aiunit setSkill ["spotDistance",0.8];
         _aiunit setSkill ["spotTime",0.7];
         _aiunit setSkill ["courage",0.9];
         _aiunit setSkill ["reloadSpeed",0.8];
+        _aiunit setSkill ["commanding",1];
+        _aiunit setSkill ["general",1];
+		*/
+		_aiunit setSkill ["aimingAccuracy",1];
+        _aiunit setSkill ["aimingShake",1];
+        _aiunit setSkill ["aimingSpeed",1];
+        _aiunit setSkill ["endurance",1];
+        _aiunit setSkill ["spotDistance",1];
+        _aiunit setSkill ["spotTime",1];
+        _aiunit setSkill ["courage",1];
+        _aiunit setSkill ["reloadSpeed",1];
         _aiunit setSkill ["commanding",1];
         _aiunit setSkill ["general",1];
         //sleep 0.5;

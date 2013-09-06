@@ -1173,7 +1173,7 @@ class Mission
 	};
 	class Markers
 	{
-		items=17;
+		items=26;
 		class Item0
 		{
 			position[]={7839.6055,381.33774,8414.7324};
@@ -1296,6 +1296,78 @@ class Mission
 			type="mil_dot";
 			colorName="ColorBlue";
 		};
+		class Item17
+        {
+            position[]={2734.660,0,9995.666};
+            name="LOPATINO";
+            text="Free Clinic";
+            type="SupplyVehicle";
+            colorName="ColorGreen";
+        };
+        class Item18
+        {
+            position[]={10490.894,0,2338.246};
+            name="ELECTRO";
+            text="Free Clinic";
+            type="SupplyVehicle";
+            colorName="ColorGreen";
+        };
+        class Item19
+        {
+            position[]={11225.398,0,6604.618};
+            name="DOLINA";
+            text="Free Clinic";
+            type="SupplyVehicle";
+            colorName="ColorGreen";
+        };
+        class Item20
+        {
+            position[]={9481.882,0,8827.120};
+            name="GORKA";
+            text="Free Clinic";
+            type="SupplyVehicle";
+            colorName="ColorGreen";
+        };
+        class Item21
+        {
+            position[]={7558.1631,0,5174.014};
+            name="MOGILEVKA";
+            text="Free Clinic";
+            type="SupplyVehicle";
+            colorName="ColorGreen";
+        };
+        class Item22
+        {
+            position[]={2521.304,0,5064.502};
+            name="ZELENGORSK";
+            text="Free Clinic";
+            type="SupplyVehicle";
+            colorName="ColorGreen";
+        };
+        class Item23
+        {
+            position[]={6467.048,0,2859.612};
+            name="CHERNO";
+            text="Free Clinic";
+            type="SupplyVehicle";
+            colorName="ColorGreen";
+        };
+        class Item24
+        {
+            position[]={6528.513,0,6098.449};
+            name="VISHNOYE";
+            text="Free Clinic";
+            type="SupplyVehicle";
+            colorName="ColorGreen";
+        };
+        class Item25
+        {
+            position[]={7087.222,0,7705.943};
+            name="NOVY";
+            text="Free Clinic";
+            type="SupplyVehicle";
+            colorName="ColorGreen";
+        };
 	};
 	class Sensors
 	{

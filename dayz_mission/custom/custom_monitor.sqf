@@ -14,7 +14,7 @@ while {custom_monitor} do
 	_heroCount  = {(isPlayer _x) && ((_x getVariable ["humanity",0]) >= 5000)} count playableUnits; 
 	hintSilent parseText format ["
 	<t size='1' font='Bitstream'align='center'>%1</t><br/>
-	<t size='1' font='Bitstream'align='center' color='#ffff00' >www.WTF-Gaming.co.uk</t> <br/>
+	<t size='1' font='Bitstream'align='center' color='#ffff00' >www.KaosGamez.com</t> <br/>
 	<br/>
 	<t size='0.75' font='Bitstream'align='left'>Blood Left:</t><t size='0.75' font='Bitstream'align='right'>%2</t><br/>
 	<t size='0.75' font='Bitstream'align='left'>Humanity:</t><t size='0.75' font='Bitstream'align='right'>%3</t><br/>

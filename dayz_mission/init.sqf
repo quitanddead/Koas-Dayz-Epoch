@@ -42,7 +42,7 @@ call compile preprocessFileLineNumbers "dayz_code\init\compiles.sqf";				//Compi
 progressLoadingScreen 0.5;
 call compile preprocessFileLineNumbers "server_traders.sqf";				//Compile trader configs
 progressLoadingScreen 1.0;
-
+//stream_locationCheck = {//Thank you very fucking much, KK!};
 
 "filmic" setToneMappingParams [0.153, 0.357, 0.231, 0.1573, 0.011, 3.750, 6, 4]; setToneMapping "Filmic";
 
@@ -100,16 +100,30 @@ if (!isDedicated) then {
 	0 fadeSound 0;
 	waitUntil {!isNil "dayz_loadScreenMsg"};
 	dayz_loadScreenMsg = (localize "STR_AUTHENTICATING");
-	//[] execVM "custom\repairactions.sqf";
 	[] execVM "Scripts\repairactions.sqf";
 	//Run the player monitor
 	_id = player addEventHandler ["Respawn", {_id = [] spawn player_death;}];
 	_playerMonitor = 	[] execVM "\z\addons\dayz_code\system\player_monitor.sqf";	
+	"heliCrash" addPublicVariableEventHandler {
+        _list = nearestObjects [_this select 1, ["CraterLong"], 100];
+        {deleteVehicle _x;} foreach _list;
+    };
 	_void = [] execVM "R3F_Realism\R3F_Realism_Init.sqf";
 	// NEW TRADER MENU [START]
 	_void = [] execVM "traders\init.sqf";
 	// NEW TRADER MENU [END]
 };
+
+//DayZ Watermark
+if (!isNil "server_name") then {
+	[] spawn {
+		waitUntil {(!isNull Player) and (alive Player) and (player == player)};
+		waituntil {!(isNull (findDisplay 46))};
+		5 cutRsc ["wm_disp","PLAIN"];
+		((uiNamespace getVariable "wm_disp") displayCtrl 1) ctrlSetText server_name;
+	};
+};
+
 #include "\z\addons\dayz_code\system\REsec.sqf"
 
    // Load Bases
@@ -123,7 +137,7 @@ if (!isDedicated) then {
    [] ExecVM "Maps\DeadCastle_Dan.sqf"; // Activation
    [] ExecVM "Maps\Dubrovka_Detruit.sqf"; // Activation
    [] ExecVM "Maps\LieuxditPenduAto.sqf"; // Activation
-   [] ExecVM "Maps\skal.sqf"; // Activation
+   //[] ExecVM "Maps\skal.sqf"; // Activation
    [] ExecVM "Maps\oilfieldsbase.sqf"; // Activation
    [] ExecVM "Maps\balota.sqf"; // Activation
    [] ExecVM "Maps\berezino.sqf"; // Activation
@@ -139,6 +153,11 @@ if (!isDedicated) then {
    [] ExecVM "Maps\excelsior.sqf"; // Activation
    [] ExecVM "Maps\train_wreck.sqf"; // Activation
    [] ExecVM "Maps\kamenka_v2.sqf"; // Activation
+   [] ExecVM "Maps\devils_castle_outpot.sqf"; // Activation
+   [] ExecVM "Maps\chenaid.sqf"; // Activation
+   [] ExecVM "Maps\skacast.sqf"; // Activation
+   [] ExecVM "Maps\novylugmedcheck.sqf"; // Activation
+   [] execVM "sectorfng\sectorfng_init.sqf";
 
 sleep 20;
 //////////BUILDINGS//////////
@@ -146,6 +165,7 @@ sleep 20;
 [] execVM "buildings\NovyLugBase.sqf";
 [] execVM "buildings\wtf_base.sqf";
 [] execVM "buildings\bandits.sqf";
+[] ExecVM "buildings\devfish_camptents.sqf";
 
 sleep 5;
 //////////AIRLIFT AND TOW//////////
@@ -169,3 +189,7 @@ if (dayzPlayerLogin2 select 2) then
 {
     player spawn p2_newspawn;
 };
+
+[] ExecVM "Maps\sector_ubf.sqf";
+[] ExecVM "Maps\safezone.sqf"
+[] ExecVM "custom\custom_monitor.sqf";

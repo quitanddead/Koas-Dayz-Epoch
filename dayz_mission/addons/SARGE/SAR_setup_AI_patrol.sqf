@@ -50,7 +50,7 @@ switch (_grouptype) do
 {
     case 1: // military
     {
-        _side = SAR_AI_friendly_side;
+        _side = SAR_AI_unfriendly_side;
         _type = "sold";
         _ai_type = "AI Military";
     };

@@ -6,9 +6,9 @@ private ["_vehicle", "_vehicle_refuel_id"];
 _vehicle = objNull;
 diag_log "Running ""Zombz.net - Repair Stations"".";
  
-_distance = 50; // Distance from object to display Refuel Message
-_amount= 0.02; // Refuel rate, Repair Rate
-_amount2= 0.01; // Repair Rate
+_distance = 25; // Distance from object to display Refuel Message
+_amount= 0.005; // Refuel rate, Repair Rate
+_amount2= 0.0005; // Repair Rate
 while {true} do
 {
     if (!isNull player) then {
