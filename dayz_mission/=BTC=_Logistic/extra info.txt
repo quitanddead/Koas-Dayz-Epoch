@@ -1,3 +1,0 @@
-"LandVehicle","Air","Land_HBarrier_large
-
- || _cargo isKindOf "LandVehicle" || _cargo isKindOf "Air" || _cargo isKindOf "Land_HBarrier_large"

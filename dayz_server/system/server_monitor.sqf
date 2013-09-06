@@ -1,4 +1,4 @@
-private ["_result","_pos","_wsDone","_dir","_block","_isOK","_countr","_objWpnTypes","_objWpnQty","_dam","_selection","_totalvehicles","_object","_idKey","_type","_ownerID","_worldspace","_intentory","_hitPoints","_fuel","_damage","_date","_script","_key","_outcome","_vehLimit","_hiveResponse","_objectCount","_codeCount","_objectArray"];
+private ["_result","_pos","_wsDone","_dir","_block","_isOK","_countr","_objWpnTypes","_objWpnQty","_dam","_selection","_totalvehicles","_object","_idKey","_type","_ownerID","_worldspace","_intentory","_hitPoints","_fuel","_damage","_date","_script","_key","_outcome","_vehLimit","_hiveResponse","_objectCount","_codeCount","_objectArray","_year","_month","_day","_hour","_minute","_data","_status","_val","_traderid","_retrader","_traderData","_id"];
 []execVM "\z\addons\dayz_server\system\s_fps.sqf"; //server monitor FPS (writes each ~181s diag_fps+181s diag_fpsmin*)
 
 dayz_versionNo = 		getText(configFile >> "CfgMods" >> "DayZ" >> "version");
@@ -36,7 +36,6 @@ if(_outcome == "PASS") then {
 	};
 		
 	if(isDedicated) then {
-		//["dayzSetDate",_date] call broadcastRpcCallAll;
 		setDate _date;
 		dayzSetDate = _date;
 		publicVariable "dayzSetDate";
@@ -67,7 +66,7 @@ if (isServer and isNil "sm_done") then {
 		diag_log "HIVE: trying to get objects";
 		_key = format["CHILD:302:%1:", dayZ_instance];
 		_hiveResponse = _key call server_hiveReadWrite;  
-		if ((((isnil "_hiveResponse") || {(typeName _hiveResponse != "ARRAY")}) || {((typeName (_hiveResponse select 1)) != "SCALAR")}) || {(_hiveResponse select 1 > 2000)}) then {
+		if ((((isnil "_hiveResponse") || {(typeName _hiveResponse != "ARRAY")}) || {((typeName (_hiveResponse select 1)) != "SCALAR")})) then {
 			diag_log ("HIVE: connection problem... HiveExt response:"+str(_hiveResponse));
 			_hiveResponse = ["",0];
 		} 
@@ -125,15 +124,20 @@ if (isServer and isNil "sm_done") then {
 		};
 
 		if (_damage < 1) then {
-			diag_log format["OBJ: %1 - %2", _idKey,_type];
+			//diag_log format["OBJ: %1 - %2", _idKey,_type];
 			
 			//Create it
 			_object = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
 			_object setVariable ["lastUpdate",time];
 			_object setVariable ["ObjectID", _idKey, true];
 
+			_lockable = 0;
+			if(isNumber (configFile >> "CfgVehicles" >> _type >> "lockable")) then {
+				_lockable = getNumber(configFile >> "CfgVehicles" >> _type >> "lockable");
+			};
+
 			// fix for leading zero issues on safe codes after restart
-			if (_object isKindOf "VaultStorageLocked") then {
+			if (_lockable == 4) then {
 				_codeCount = (count (toArray _ownerID));
 				if(_codeCount == 3) then {
 					_ownerID = format["0%1", _ownerID];
@@ -146,6 +150,16 @@ if (isServer and isNil "sm_done") then {
 				};
 			};
 
+			if (_lockable == 3) then {
+				_codeCount = (count (toArray _ownerID));
+				if(_codeCount == 2) then {
+					_ownerID = format["0%1", _ownerID];
+				};
+				if(_codeCount == 1) then {
+					_ownerID = format["00%1", _ownerID];
+				};
+			};
+
 			_object setVariable ["CharacterID", _ownerID, true];
 			
 			clearWeaponCargoGlobal  _object;
@@ -155,19 +169,20 @@ if (isServer and isNil "sm_done") then {
 				_object addMPEventHandler ["MPKilled",{_this call object_handleServerKilled;}];
 				// Test disabling simulation server side on buildables only.
 				_object enableSimulation false;
+				// used for inplace upgrades and lock/unlock of safe
+				_object setVariable ["OEMPos", _pos, true];
 			};
 			
 			_object setdir _dir;
 			_object setpos _pos;
 			_object setDamage _damage;
-			
+
 			if (count _intentory > 0) then {
-				if (_object isKindOf "VaultStorageLocked") then {
+				if (_type in DZE_LockedStorage) then {
 					// Fill variables with loot
 					_object setVariable ["WeaponCargo", (_intentory select 0), true];
 					_object setVariable ["MagazineCargo", (_intentory select 1), true];
 					_object setVariable ["BackpackCargo", (_intentory select 2), true];
-					_object setVariable ["OEMPos", _pos, true];
 				} else {
 
 					//Add weapons
@@ -192,6 +207,7 @@ if (isServer and isNil "sm_done") then {
 					_countr = 0;
 					{
 						if (_x == "BoltSteel") then { _x = "WoodenArrow" }; // Convert BoltSteel to WoodenArrow
+						if (_x == "ItemTent") then { _x = "ItemTentOld" };
 						_isOK = 	isClass(configFile >> "CfgMagazines" >> _x);
 						if (_isOK) then {
 							_block = 	getNumber(configFile >> "CfgMagazines" >> _x >> "stopThis") == 1;
@@ -232,7 +248,7 @@ if (isServer and isNil "sm_done") then {
 				if (!((typeOf _object) in dayz_allowedObjects)) then {
 					
 					_object setvelocity [0,0,1];
-					_object call fnc_vehicleEventHandler;			
+					_object call fnc_veh_ResetEH;		
 					
 					if(_ownerID != "0") then {
 						_object setvehiclelock "locked";
@@ -250,6 +266,44 @@ if (isServer and isNil "sm_done") then {
 		};
 	} forEach _objectArray;
 	// # END OF STREAMING #
+
+
+	// preload server traders menu data into cache
+	{
+		// get tids
+		_traderData = call compile format["menu_%1;",_x];
+		if(!isNil "_traderData") then {
+			{
+				_traderid = _x select 1;
+
+				_retrader = [];
+
+				_key = format["CHILD:399:%1:",_traderid];
+				_data = "HiveEXT" callExtension _key;
+
+				//diag_log "HIVE: Request sent";
+		
+				//Process result
+				_result = call compile format ["%1",_data];
+				_status = _result select 0;
+		
+				if (_status == "ObjectStreamStart") then {
+					_val = _result select 1;
+					//Stream Objects
+					//diag_log ("HIVE: Commence Menu Streaming...");
+					call compile format["ServerTcache_%1 = [];",_traderid];
+					for "_i" from 1 to _val do {
+						_data = "HiveEXT" callExtension _key;
+						_result = call compile format ["%1",_data];
+						call compile format["ServerTcache_%1 set [count ServerTcache_%1,%2]",_traderid,_result];
+						_retrader set [count _retrader,_result];
+					};
+					//diag_log ("HIVE: Streamed " + str(_val) + " objects");
+				};
+
+			} forEach (_traderData select 0);
+		};
+	} forEach serverTraders;
 
 	//  spawn_vehicles
 	_vehLimit = MaxVehicleLimit - _totalvehicles;
@@ -275,14 +329,21 @@ if (isServer and isNil "sm_done") then {
 		OldHeliCrash = false;
 	};
 
+	allowConnection = true;
+
 	// [_guaranteedLoot, _randomizedLoot, _frequency, _variance, _spawnChance, _spawnMarker, _spawnRadius, _spawnFire, _fadeFire]
 	if(OldHeliCrash) then {
 		nul = [3, 4, (50 * 60), (15 * 60), 0.75, 'center', HeliCrashArea, true, false] spawn server_spawnCrashSite;
 	};
 
-	// Epoch Events
-	nul = [] spawn server_spawnEvents;
+	if (isDedicated) then {
+		// Epoch Events
+		_id = [] spawn server_spawnEvents;
+		// server cleanup
+		_id = [] execFSM "\z\addons\dayz_server\system\server_cleanup.fsm";
+	};
 
-	allowConnection = true;
+	
 	sm_done = true;
+	publicVariable "sm_done";
 };

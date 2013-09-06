@@ -7,8 +7,7 @@ cutText ["","BLACK OUT"];
 enableSaving [false, false];
 
 //REALLY IMPORTANT VALUES
-dayZ_instance =	1748;					//The instance
-dayZ_serverName = "KaosGamez.com";			// server name (country code + server number)
+dayZ_instance =	1735;					//The instance
 dayzHiveRequest = [];
 initialized = false;
 dayz_previousID = 0;
@@ -27,7 +26,6 @@ MaxDynamicDebris = 500; // Default = 100
 dayz_MapArea = 14000; // Default = 10000
 dayz_maxLocalZombies = 30; // Default = 30 
 
-adminList = ["83439686","83453510","36172102","137454278","55512262"];
 EpochEvents = [["any","any","any","any",30,"crash_spawner"],["any","any","any","any",0,"crash_spawner"]];
 dayz_fullMoonNights = true;
 
@@ -42,7 +40,6 @@ call compile preprocessFileLineNumbers "dayz_code\init\compiles.sqf";				//Compi
 progressLoadingScreen 0.5;
 call compile preprocessFileLineNumbers "server_traders.sqf";				//Compile trader configs
 progressLoadingScreen 1.0;
-//stream_locationCheck = {//Thank you very fucking much, KK!};
 
 "filmic" setToneMappingParams [0.153, 0.357, 0.231, 0.1573, 0.011, 3.750, 6, 4]; setToneMapping "Filmic";
 
@@ -89,7 +86,7 @@ if ((!isServer) && (player != player)) then
 
 if (isServer) then {
 	call compile preprocessFileLineNumbers "dynamic_vehicle.sqf";				//Compile vehicle configs
-	"DZ_bodyTrap" addPublicVariableEventHandler {[_this select 1] execVM 'Scripts\createBodyBomb.sqf'}; // Body Bomb
+	
 	// Add trader citys
 	_nil = [] execVM "mission.sqf";
 	_serverMonitor = 	[] execVM "\z\addons\dayz_code\system\server_monitor.sqf";
@@ -104,26 +101,11 @@ if (!isDedicated) then {
 	//Run the player monitor
 	_id = player addEventHandler ["Respawn", {_id = [] spawn player_death;}];
 	_playerMonitor = 	[] execVM "\z\addons\dayz_code\system\player_monitor.sqf";	
-	"heliCrash" addPublicVariableEventHandler {
-        _list = nearestObjects [_this select 1, ["CraterLong"], 100];
-        {deleteVehicle _x;} foreach _list;
-    };
 	_void = [] execVM "R3F_Realism\R3F_Realism_Init.sqf";
-	// NEW TRADER MENU [START]
 	_void = [] execVM "traders\init.sqf";
-	// NEW TRADER MENU [END]
+	//Lights
+	//[] execVM "\z\addons\dayz_code\compile\local_lights_init.sqf";
 };
-
-//DayZ Watermark
-if (!isNil "server_name") then {
-	[] spawn {
-		waitUntil {(!isNull Player) and (alive Player) and (player == player)};
-		waituntil {!(isNull (findDisplay 46))};
-		5 cutRsc ["wm_disp","PLAIN"];
-		((uiNamespace getVariable "wm_disp") displayCtrl 1) ctrlSetText server_name;
-	};
-};
-
 #include "\z\addons\dayz_code\system\REsec.sqf"
 
    // Load Bases
@@ -167,12 +149,7 @@ sleep 20;
 [] execVM "buildings\bandits.sqf";
 [] ExecVM "buildings\devfish_camptents.sqf";
 
-sleep 5;
-//////////AIRLIFT AND TOW//////////
-_logistic = execVM "=BTC=_Logistic\=BTC=_Logistic_Init.sqf";
-_logistic = execVM "=BTC=_LogisticTow\=BTC=_Logistic_Init.sqf";
-
-   sleep 10;
+sleep 10;
 //////////SARGE AI//////////
 call compile preprocessFileLineNumbers "addons\UPSMON\scripts\Init_UPSMON.sqf";
 call compile preprocessfile "addons\SHK_pos\shk_pos_init.sqf";
@@ -181,14 +158,6 @@ call compile preprocessfile "addons\SHK_pos\shk_pos_init.sqf";
 [[11251.543,4283.1758,0.001],150] execVM "custom\SAR_nuke_zeds2.sqf";
 
 dayz_spawnCrashSite_clutterCutter=2; // helicrash spawn... 0: loot hidden in grass, 1: loot lifted, 2: no grass
-
-//##UID Based Custom Spawn Locations##
-p2_newspawn = compile preprocessFileLineNumbers "fixes\newspawn.sqf";
-waitUntil {!isNil ("dayzLoginRecord")};
-if (dayzPlayerLogin2 select 2) then
-{
-    player spawn p2_newspawn;
-};
 
 [] ExecVM "Maps\sector_ubf.sqf";
 [] ExecVM "Maps\safezone.sqf"

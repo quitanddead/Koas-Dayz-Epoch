@@ -1,4 +1,4 @@
-private["_characterID","_minutes","_newObject","_playerID","_playerName","_infected","_victim","_victimName","_killer","_killerName","_weapon","_distance","_message","_loc_message","_key","_eh","_body","_method","_name"];
+private ["_characterID","_minutes","_newObject","_playerID","_playerName","_infected","_victim","_victimName","_killer","_killerName","_weapon","_distance","_message","_loc_message","_key","_death_record","_sound"];
 //[unit, weapon, muzzle, mode, ammo, magazine, projectile]
 _characterID = 	_this select 0;
 _minutes =		_this select 1;
@@ -9,7 +9,7 @@ _infected =		_this select 5;
 
 _victim removeAllEventHandlers "MPHit";
 
-_victim = _this select 2;
+_victim = _newObject;
 _victimName = _victim getVariable["bodyName", "nil"];
 
 _killer = _victim getVariable["AttackedBy", "nil"];
@@ -34,9 +34,16 @@ if (_killerName != "nil") then
 	};
 
 	diag_log _loc_message;
+	
 	if(DZE_DeathMsgGlobal) then {
 		[nil, nil, rspawn, [_killer, _message], { (_this select 0) globalChat (_this select 1) }] call RE;
 	};
+	/* needs customRemoteMessage 
+	if(DZE_DeathMsgGlobal) then {
+		customRemoteMessage = ['globalChat', _message, _killer];
+		publicVariable "customRemoteMessage";
+	};
+	*/
 	if(DZE_DeathMsgSide) then {
 		[nil, nil, rspawn, [_killer, _message], { (_this select 0) sideChat (_this select 1) }] call RE;
 	};
@@ -45,7 +52,14 @@ if (_killerName != "nil") then
 	};
 
 	// build array to store death messages to allow viewing at message board in trader citys.
-	PlayerDeaths set [count PlayerDeaths,_message];
+	_death_record = [
+		_victimName,
+		_killerName,
+		_weapon,
+		_distance,
+		ServerCurrentTime
+	];
+	PlayerDeaths set [count PlayerDeaths,_death_record];
 
 	// Cleanup
 	_victim setVariable["AttackedBy", "nil", true];
@@ -54,42 +68,38 @@ if (_killerName != "nil") then
 	_victim setVariable["AttackedFromDistance", "nil", true];
 };
 
+// Might not be the best way...
+if (isnil "dayz_disco") then {
+	dayz_disco = [];
+};
+
 dayz_disco = dayz_disco - [_playerID];
 _newObject setVariable["processedDeath",time];
-
-/*
-diag_log ("DW_DEBUG: (isnil _characterID): " + str(isnil "_characterID"));
-if (isnil "_characterID") then {
-diag_log ("DW_DEBUG: _newObject: " + str(_newObject));	
-	};
-*/
 
 if (typeName _minutes == "STRING") then 
 {
 	_minutes = parseNumber _minutes;
 };
 	
+#ifdef DZE_SERVER_DEBUG_PKILL
+diag_log ("PDEATH: Player Died " + _playerID);
+#endif
+
 if (_characterID != "0") then 
 {
 	_key = format["CHILD:202:%1:%2:%3:",_characterID,_minutes,_infected];
-	//diag_log ("HIVE: WRITE: "+ str(_key));
+	#ifdef DZE_SERVER_DEBUG_HIVE
+	diag_log ("HIVE: WRITE: "+ str(_key));
+	#endif
 	_key call server_hiveWrite;
+
+	// spawn flies
+	_sound = createSoundSource["Sound_Flies",getPosATL _newObject,[],0];
+	
+	// Add flies to cleanup array
+	dayz_flyMonitor set[count dayz_flyMonitor, [_sound,_newObject]];
 } 
 else 
 {
 	deleteVehicle _newObject;
 };
-
-diag_log ("PDEATH: Player Died " + _playerID);
-/*
-_eh = [_newObject] spawn {
-	_body = _this select 0;
-	_method = _body getVariable["deathType","unknown"];
-	_name = _body getVariable["bodyName","unknown"];
-	waitUntil{!isPlayer _body;sleep 1};
-	_body setVariable["deathType",_method,true];
-	_body setVariable["bodyName",_name,true];
-	diag_log ("PDEATH: Player Left Body " + _name);
-};
-*/
-//dead_bodyCleanup set [count dead_bodyCleanup,_newObject];

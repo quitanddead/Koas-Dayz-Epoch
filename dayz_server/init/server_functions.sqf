@@ -74,10 +74,10 @@ check_publishobject = {
 	
 	_allowed = false;
        
-	diag_log format ["DEBUG: Checking if Object: %1 is allowed published by %2", _object, _playername];
+	//diag_log format ["DEBUG: Checking if Object: %1 is allowed published by %2", _object, _playername];
 
 	if ((typeOf _object) in dayz_allowedObjects) then {
-			diag_log format ["DEBUG: Object: %1 published by %2 is Safe",_object, _playername];
+			//diag_log format ["DEBUG: Object: %1 published by %2 is Safe",_object, _playername];
 			_allowed = true;
 	};
     _allowed
@@ -119,17 +119,6 @@ server_hiveWrite = {
 	//diag_log ("WRITE: " +str(_data));
 };
 
-//----------InitMissions--------//
-  MissionGo = 0;
-  MissionGoMinor = 0;
-    if (isServer) then {
-  SMarray = ["SM1","SM2","SM3","SM4","SM5","SM6"];
-    [] execVM "\z\addons\dayz_server\missions\major\SMfinder.sqf"; //Starts major mission system
-    SMarray2 = ["SM1","SM2","SM3","SM4","SM5","SM6"];
-    [] execVM "\z\addons\dayz_server\missions\minor\SMfinder.sqf"; //Starts minor mission system
-    };
-//---------EndInitMissions------//
-
 server_hiveReadWrite = {
 	private["_key","_resultArray","_data"];
 	_key = _this;
@@ -169,7 +158,14 @@ if(isnil "DynamicVehicleArea") then {
 // Get all buildings and roads only once TODO: set variables to nil after done if nessicary 
 MarkerPosition = getMarkerPos "center";
 RoadList = MarkerPosition nearRoads DynamicVehicleArea;
-BuildingList = MarkerPosition nearObjects ["House",DynamicVehicleArea];
+
+BuildingList = [];
+{
+	if (isClass (configFile >> "CfgBuildingLoot" >> (typeOf _x))) then
+	{
+		BuildingList set [count BuildingList,_x];
+	};
+} forEach (MarkerPosition nearObjects ["building",DynamicVehicleArea]);
 
 spawn_vehicles = {
 	private ["_weights","_isOverLimit","_isAbort","_counter","_index","_vehicle","_velimit","_qty","_isAir","_isShip","_position","_dir","_istoomany","_veh","_objPosition","_marker","_iClass","_itemTypes","_cntWeights","_itemType","_num","_allCfgLoots"];
@@ -299,7 +295,7 @@ spawn_vehicles = {
 					_index = _weights select _index;
 					_itemType = _itemTypes select _index;
 					_veh addMagazineCargoGlobal [_itemType,1];
-					diag_log("DEBUG: spawed loot inside vehicle " + str(_itemType));
+					//diag_log("DEBUG: spawed loot inside vehicle " + str(_itemType));
 				};
 
 				[_veh,[_dir,_objPosition],_vehicle,true,"0"] call server_publishVeh;
@@ -343,7 +339,7 @@ spawn_roadblocks = {
 				_spawnloot = "DynamicDebrisMilitary";
 			};
 		
-			diag_log("DEBUG: Spawning a crashed " + _spawnveh + " with " + _spawnloot + " at " + str(_position));
+			//diag_log("DEBUG: Spawning a crashed " + _spawnveh + " with " + _spawnloot + " at " + str(_position));
 			_veh = createVehicle [_spawnveh,_position, [], 0, "CAN_COLLIDE"];
 			_veh enableSimulation false;
 
@@ -351,33 +347,7 @@ spawn_roadblocks = {
 			_veh setDir round(random 360);
 			_veh setpos _position;
 
-			dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_veh];
 			_veh setVariable ["ObjectID","1",true];
-
-			_num = round(random 3);
-			_config = 		configFile >> "CfgBuildingLoot" >> _spawnloot;
-			_itemType =		[] + getArray (_config >> "itemType");
-			_itemChance =	[] + getArray (_config >> "itemChance");
-
-			waituntil {!isnil "fnc_buildWeightedArray"};
-		
-			_weights = [];
-			_weights = 		[_itemType,_itemChance] call fnc_buildWeightedArray;
-			for "_x" from 1 to _num do {
-				//create loot
-				_index = _weights call BIS_fnc_selectRandom;
-				sleep 1;
-				if (count _itemType > _index) then {
-					_iArray = _itemType select _index;
-					_iArray set [2,_position];
-					_iArray set [3,5];
-					_iArray call spawn_loot;
-					_nearby = _position nearObjects ["WeaponHolder",20];
-					{
-						_x setVariable ["permaLoot",true];
-					} forEach _nearBy;
-				};
-			};
 		};
 	
 	};
@@ -487,4 +457,93 @@ dayz_recordLogin = {
 	private["_key"];
 	_key = format["CHILD:103:%1:%2:%3:",_this select 0,_this select 1,_this select 2];
 	_key call server_hiveWrite;
+};
+
+//----------InitMissions--------//
+  MissionGo = 0;
+  MissionGoMinor = 0;
+    if (isServer) then {
+  SMarray = ["SM1","SM2","SM3","SM4","SM5","SM6"];
+    [] execVM "\z\addons\dayz_server\missions\major\SMfinder.sqf"; //Starts major mission system
+    SMarray2 = ["SM1","SM2","SM3","SM4","SM5","SM6"];
+    [] execVM "\z\addons\dayz_server\missions\minor\SMfinder.sqf"; //Starts minor mission system
+    };
+    //---------EndInitMissions------//
+
+// Cleanup flies
+server_cleanFlies = 
+{
+    private ["_sound","_newdayz_flyMonitor"];
+	
+	DZE_FlyWorkingSet = DZE_FlyWorkingSet+dayz_flyMonitor;
+	dayz_flyMonitor = [];
+
+	_newdayz_flyMonitor = [];
+	{
+		_sound = _x select 0;
+		_body = _x select 1;
+
+		// Remove flies
+		if (isNull _body) then {
+			deleteVehicle _sound;
+			[_body] call server_Delete;
+		} else {
+			_newdayz_flyMonitor set [count _newdayz_flyMonitor,_x];
+		};
+
+	} forEach DZE_FlyWorkingSet;
+	
+	DZE_FlyWorkingSet = _newdayz_flyMonitor;
+};
+
+server_cleanDead =
+{
+	{
+		if (_x isKindOf "zZombie_Base") then
+		{
+			deleteVehicle _x;
+		}
+		else
+		{
+			_handled = _x getVariable ["handled",true];
+			if (_handled) then {
+				_x enableSimulation false;
+				_body removeAllEventHandlers "HandleDamage";
+				_body removeAllEventHandlers "Killed";
+				_body removeAllEventHandlers "Fired";
+				_body removeAllEventHandlers "FiredNear";
+			};
+		};
+	} forEach allDead;
+};
+
+server_cleanLoot =
+{
+private ["_deletedLoot","_startTime","_looted","_objectPos","_noPlayerNear","_nearObj"];
+
+	_deletedLoot = 0;
+	_startTime = diag_tickTime;
+
+	{
+		_looted = (_x getVariable ["looted",-0.1]);
+		if (_looted != -0.1) then
+		{
+			_objectPos = getPosATL _x;
+			_noPlayerNear = {isPlayer _x} count (_objectPos nearEntities ["CAManBase",35]) == 0;
+
+			if (_noPlayerNear) then
+			{
+				_nearObj = nearestObjects [_objectPos,["ReammoBox","WeaponHolder","WeaponHolderBase"],((sizeOf (typeOf _x)) + 5)];
+				{
+					deleteVehicle _x;
+					_deletedLoot = _deletedLoot + 1;
+				} forEach _nearObj;
+				_x setVariable ["looted",-0.1,true];
+			};
+		};
+	} forEach BuildingList;
+
+	_endTime = diag_tickTime;
+
+	diag_log (format["CLEANUP: DELETED %1 ITEMS, RUNTIME: %2",_deletedLoot,(_endTime - _startTime)]);
 };
