@@ -8,7 +8,7 @@ enableSaving [false, false];
 
 //REALLY IMPORTANT VALUES
 dayZ_instance =	1748;					//The instance
-dayZ_serverName = "KaosGames.com";			// server name (country code + server number)
+dayZ_serverName = "KaosGamez.com";			// server name (country code + server number)
 dayzHiveRequest = [];
 initialized = false;
 dayz_previousID = 0;
@@ -129,11 +129,11 @@ if (!isDedicated) then {
    [] ExecVM "Maps\berezino.sqf"; // Activation
    [] ExecVM "Maps\cherno_base.sqf"; // Activation
    [] ExecVM "Maps\dichina.sqf"; // Activation
-   [] ExecVM "Maps\klen.sqf"; // Activation
+   //[] ExecVM "Maps\klen.sqf"; // Activation
    [] ExecVM "Maps\last_stand.sqf"; // Activation
    [] ExecVM "Maps\ne_airstrip.sqf"; // Activation
    [] ExecVM "Maps\nw_airstrip.sqf"; // Activation
-   [] ExecVM "Maps\stary.sqf"; // Activation
+   //[] ExecVM "Maps\stary.sqf"; // Activation
    [] ExecVM "Maps\NovyLugBase.sqf"; // Activation
    [] ExecVM "Maps\lopatino.sqf"; // Activation
    [] ExecVM "Maps\excelsior.sqf"; // Activation
