@@ -56,7 +56,7 @@ switch (_grouptype) do
     };
     case 2: // survivors
     {
-        _side = SAR_AI_friendly_side;
+        _side = SAR_AI_unfriendly_side;
         _type = "surv";
         _ai_type = "AI Survivor";
     };

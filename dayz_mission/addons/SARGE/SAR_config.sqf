@@ -67,7 +67,7 @@ SAR_AI_STEAL_VEHICLE = false;
 // -----------------------------------------------
 
 // Humanity Value that gets substracted for a survivor or soldier AI kill
-SAR_surv_kill_value = -250;
+SAR_surv_kill_value = -100;
 
 // Humanity Value that gets ADDED for a bandit AI kill
 SAR_band_kill_value = 100;
@@ -226,10 +226,10 @@ KRON_UPS_wp_maxwaiting = 120;
 KRON_UPS_alerttime = 90;
 
 // how close unit has to be to target to generate a new one target or to enter stealth mode
-KRON_UPS_closeenough = 100; // if you have vast plain areas, increase this to sth around 150-300 
+KRON_UPS_closeenough = 250; // if you have vast plain areas, increase this to sth around 150-300 
 
 // if you are spotted by AI group, how close the other AI group have to be to You , to be informed about your present position. over this, will lose target
-KRON_UPS_sharedist = 200;
+KRON_UPS_sharedist = 400;
 
 // If enabled IA communication between them with radio defined sharedist distance, 0/2 
 // (must be set to 2 in order to use reinforcement !R)
@@ -254,7 +254,7 @@ KRON_UPS_Res_enemy = [east];
 //
 //                      2.5 -> easy
 //
-R_knowsAboutEnemy = 0.7;
+R_knowsAboutEnemy = 0.5;
 
 //
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -268,19 +268,19 @@ R_knowsAboutEnemy = 0.7;
 // IMPORTANT: The leader types must be different to each other! So you need 3 different leader types here!
 
 // military AI
-SAR_leader_sold_list = ["Rocket_DZ"]; // the potential classes of the leader of a soldier group
-SAR_sniper_sold_list = ["Sniper1_DZ"]; // the potential classes of the snipers of a soldier group
-SAR_soldier_sold_list = ["Soldier1_DZ","Camo1_DZ"]; // the potential classes of the riflemen of a soldier group
+SAR_leader_sold_list = ["Bandit2_DZ","BanditW2_DZ","Graves_Light_DZ"]; // the potential classes of the leader of a soldier group
+SAR_sniper_sold_list = ["Sniper1_DZ","Soldier_Sniper_PMC_DZ"]; // the potential classes of the snipers of a soldier group
+SAR_soldier_sold_list = ["Bandit1_DZ", "BanditW1_DZ","Soldier_Crew_PMC","Camo1_DZ"]; // the potential classes of the riflemen of a soldier group
 
 // bandit AI
-SAR_leader_band_list = ["Bandit1_DZ"]; // the potential classes of the leader of a bandit group
-SAR_sniper_band_list = ["Sniper1_DZ"]; // the potential classes of the snipers of a bandit group
-SAR_soldier_band_list = ["Bandit1_DZ", "BanditW1_DZ","Soldier_Crew_PMC"]; // the potential classes of the riflemen of a bandit group
+SAR_leader_band_list = ["Bandit1_DZ","BanditW1_DZ","Graves_Light_DZ"]; // the potential classes of the leader of a bandit group
+SAR_sniper_band_list = ["Sniper1_DZ","Soldier_Sniper_PMC_DZ"]; // the potential classes of the snipers of a bandit group
+SAR_soldier_band_list = ["Bandit1_DZ", "BanditW1_DZ","Soldier_Crew_PMC","Camo1_DZ"]; // the potential classes of the riflemen of a bandit group
 
 // survivor AI
-SAR_leader_surv_list = ["Survivor3_DZ"]; // the potential classes of the leaders of a survivor group
-SAR_sniper_surv_list = ["Sniper1_DZ"]; // the potential classes of the snipers of a survivor group
-SAR_soldier_surv_list = ["Survivor2_DZ","SurvivorW2_DZ","Soldier_Crew_PMC"]; // the potential classes of the riflemen of a survivor group
+SAR_leader_surv_list = ["Bandit2_DZ","BanditW2_DZ","Graves_Light_DZ"]; // the potential classes of the leaders of a survivor group
+SAR_sniper_surv_list = ["Sniper1_DZ","Soldier_Sniper_PMC_DZ"]; // the potential classes of the snipers of a survivor group
+SAR_soldier_surv_list = ["Bandit1_DZ", "BanditW1_DZ","Soldier_Crew_PMC","Camo1_DZ"]; // the potential classes of the riflemen of a survivor group
 
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -449,7 +449,7 @@ SAR_sniper_surv_skills = [
 // military
 
 // potential weapon list for leaders
-SAR_sold_leader_weapon_list = ["M4A1","M4A3_CCO_EP1","AK_47_M"];
+SAR_sold_leader_weapon_list = ["G36_C_SD_camo","M4A3_CCO_EP1","AK_47_M"];
 SAR_sold_leader_pistol_list = [];   
 
 // potential item list for leaders -> Item / Chance 1 - 100
@@ -465,7 +465,7 @@ SAR_sold_rifleman_items = [["ItemSodaCoke",75],["FoodCanBakedBeans",60]];
 SAR_sold_rifleman_tools = [["ItemMap",50],["ItemCompass",30]];
 
 //potential weapon list for snipers
-SAR_sold_sniper_weapon_list = ["M4A1_Aim","SVD_CAMO","Huntingrifle"];
+SAR_sold_sniper_weapon_list = ["DMR","SVD_CAMO","M40A3"];
 SAR_sold_sniper_pistol_list = [];   
 
 // potential item list for snipers
@@ -505,7 +505,7 @@ SAR_surv_sniper_tools = [["ItemMap",50],["ItemCompass",30]];
 //
 
 // potential weapon list for leaders
-SAR_band_leader_weapon_list = ["M4A1","M4A3_CCO_EP1","AK_47_M"];
+SAR_band_leader_weapon_list = ["G36_C_SD_camo","M4A3_CCO_EP1","AK_47_M"];
 SAR_band_leader_pistol_list = [];   
 
 // potential item list for leaders -> Item / Chance 1 - 100
@@ -521,7 +521,7 @@ SAR_band_rifleman_items = [["ItemSodaCoke",75],["FoodCanBakedBeans",60]];
 SAR_band_rifleman_tools = [["ItemMap",50],["ItemCompass",30],["Binocular_Vector",2]];
 
 //potential weapon list for snipers
-SAR_band_sniper_weapon_list = ["M4A1_Aim","SVD_CAMO","Huntingrifle"];
+SAR_band_sniper_weapon_list = ["DMR","SVD_CAMO","M40A3"];
 SAR_band_sniper_pistol_list = [];   
 
 // potential item list for snipers

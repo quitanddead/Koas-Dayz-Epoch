@@ -44,7 +44,7 @@ if (_argc >1) then {
     {
         case 1: // military
         {
-            _side = SAR_AI_friendly_side;
+            _side = SAR_AI_unfriendly_side;
             _type = "sold";
             _ai_type = "AI Military";
             _initstring = "[this] spawn SAR_AI_trace_veh;this setIdentity 'id_SAR_sold_man';[this] spawn SAR_AI_reammo;";
@@ -52,7 +52,7 @@ if (_argc >1) then {
         };
         case 2: // survivors
         {
-            _side = SAR_AI_friendly_side;
+            _side = SAR_AI_unfriendly_side;
             _type = "surv";
             _ai_type = "AI Survivor";                        
             _initstring = "[this] spawn SAR_AI_trace_veh;this setIdentity 'id_SAR_surv_lead';[this] spawn SAR_AI_reammo;";
