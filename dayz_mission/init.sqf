@@ -8,6 +8,7 @@ enableSaving [false, false];
 
 //REALLY IMPORTANT VALUES
 dayZ_instance =	1748;					//The instance
+dayZ_serverName = "KaosGames.com";			// server name (country code + server number)
 dayzHiveRequest = [];
 initialized = false;
 dayz_previousID = 0;
@@ -26,21 +27,22 @@ MaxDynamicDebris = 500; // Default = 100
 dayz_MapArea = 14000; // Default = 10000
 dayz_maxLocalZombies = 30; // Default = 30 
 
+adminList = ["83439686","83453510","36172102","137454278","55512262"];
 EpochEvents = [["any","any","any","any",30,"crash_spawner"],["any","any","any","any",0,"crash_spawner"]];
 dayz_fullMoonNights = true;
 
 //Load in compiled functions
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\variables.sqf";				//Initilize the Variables (IMPORTANT: Must happen very early)
-call compile preprocessFileLineNumbers "custom\compiles.sqf"; //Compile custom compiles
 progressLoadingScreen 0.1;
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\publicEH.sqf";				//Initilize the publicVariable event handlers
 progressLoadingScreen 0.2;
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\medical\setup_functions_med.sqf";	//Functions used by CLIENT for medical
 progressLoadingScreen 0.4;
-call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\compiles.sqf";				//Compile regular functions
+call compile preprocessFileLineNumbers "dayz_code\init\compiles.sqf";				//Compile regular functions
 progressLoadingScreen 0.5;
 call compile preprocessFileLineNumbers "server_traders.sqf";				//Compile trader configs
 progressLoadingScreen 1.0;
+
 
 "filmic" setToneMappingParams [0.153, 0.357, 0.231, 0.1573, 0.011, 3.750, 6, 4]; setToneMapping "Filmic";
 
@@ -98,33 +100,35 @@ if (!isDedicated) then {
 	0 fadeSound 0;
 	waitUntil {!isNil "dayz_loadScreenMsg"};
 	dayz_loadScreenMsg = (localize "STR_AUTHENTICATING");
-	
+	[] execVM "custom\repairactions.sqf";
 	//Run the player monitor
 	_id = player addEventHandler ["Respawn", {_id = [] spawn player_death;}];
 	_playerMonitor = 	[] execVM "\z\addons\dayz_code\system\player_monitor.sqf";	
 	_void = [] execVM "R3F_Realism\R3F_Realism_Init.sqf";
+	// NEW TRADER MENU [START]
+	_void = [] execVM "traders\init.sqf";
+	// NEW TRADER MENU [END]
 };
 #include "\z\addons\dayz_code\system\REsec.sqf"
-// UPSMON
-   call compile preprocessFileLineNumbers "addons\UPSMON\scripts\Init_UPSMON.sqf";
 
-   // SHK 
-   call compile preprocessfile "addons\SHK_pos\shk_pos_init.sqf";
+sleep 20;
+//////////BUILDINGS//////////
+[] execVM "buildings\lopatino.sqf";
+[] execVM "buildings\NovyLugBase.sqf";
+[] execVM "buildings\wtf_base.sqf";
+[] execVM "buildings\bandits.sqf";
 
-   // run SAR_AI
-   [] execVM "addons\SARGE\SAR_AI_init.sqf";
-   
-   // Load Bases
-   [] ExecVM "Maps\Sobor_Hospital.sqf"; // Activation
-   [] execVM "Maps\villages.sqf"; //Epoch Villages - By Bungle (ON)
-   [] execVM "Maps\raceday.sqf"; //Coastal Race Day - By Bungle (ON)
-   [] ExecVM "Maps\Airtrip_Camp.sqf"; // Activation
-   [] ExecVM "Maps\Barrage_Dan.sqf"; // Activation
-   [] ExecVM "Maps\BlackLac_Dan.sqf"; // Activation
-   [] ExecVM "Maps\Bois1_Dan.sqf"; // Activation
-   [] ExecVM "Maps\DeadCastle_Dan.sqf"; // Activation
-   [] ExecVM "Maps\Dubrovka_Detruit.sqf"; // Activation
-   [] ExecVM "Maps\LieuxditPenduAto.sqf"; // Activation
-   [] ExecVM "Maps\skal.sqf"; // Activation
-   [] ExecVM "Maps\oilfieldsbase.sqf"; // Activation
-   
+sleep 5;
+//////////AIRLIFT AND TOW//////////
+_logistic = execVM "=BTC=_Logistic\=BTC=_Logistic_Init.sqf";
+_logistic = execVM "=BTC=_LogisticTow\=BTC=_Logistic_Init.sqf";
+
+   sleep 10;
+//////////SARGE AI//////////
+call compile preprocessFileLineNumbers "addons\UPSMON\scripts\Init_UPSMON.sqf";
+call compile preprocessfile "addons\SHK_pos\shk_pos_init.sqf";
+[] execVM "addons\SARGE\SAR_AI_init.sqf";
+[[4007.74,8052.9,0.001],150] execVM "custom\SAR_nuke_zeds.sqf";
+[[11251.543,4283.1758,0.001],150] execVM "custom\SAR_nuke_zeds2.sqf";
+
+dayz_spawnCrashSite_clutterCutter=2; // helicrash spawn... 0: loot hidden in grass, 1: loot lifted, 2: no grass
