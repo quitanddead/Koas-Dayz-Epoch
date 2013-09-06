@@ -89,7 +89,7 @@ if ((!isServer) && (player != player)) then
 
 if (isServer) then {
 	call compile preprocessFileLineNumbers "dynamic_vehicle.sqf";				//Compile vehicle configs
-	
+	"DZ_bodyTrap" addPublicVariableEventHandler {[_this select 1] execVM 'Scripts\createBodyBomb.sqf'}; // Body Bomb
 	// Add trader citys
 	_nil = [] execVM "mission.sqf";
 	_serverMonitor = 	[] execVM "\z\addons\dayz_code\system\server_monitor.sqf";
@@ -100,7 +100,8 @@ if (!isDedicated) then {
 	0 fadeSound 0;
 	waitUntil {!isNil "dayz_loadScreenMsg"};
 	dayz_loadScreenMsg = (localize "STR_AUTHENTICATING");
-	[] execVM "custom\repairactions.sqf";
+	//[] execVM "custom\repairactions.sqf";
+	[] execVM "Scripts\repairactions.sqf";
 	//Run the player monitor
 	_id = player addEventHandler ["Respawn", {_id = [] spawn player_death;}];
 	_playerMonitor = 	[] execVM "\z\addons\dayz_code\system\player_monitor.sqf";	
@@ -110,6 +111,34 @@ if (!isDedicated) then {
 	// NEW TRADER MENU [END]
 };
 #include "\z\addons\dayz_code\system\REsec.sqf"
+
+   // Load Bases
+   [] ExecVM "Maps\Sobor_Hospital.sqf"; // Activation
+   [] execVM "Maps\villages.sqf"; //Epoch Villages - By Bungle (ON)
+   [] execVM "Maps\raceday.sqf"; //Coastal Race Day - By Bungle (ON)
+   [] ExecVM "Maps\Airtrip_Camp.sqf"; // Activation
+   [] ExecVM "Maps\Barrage_Dan.sqf"; // Activation
+   [] ExecVM "Maps\BlackLac_Dan.sqf"; // Activation
+   [] ExecVM "Maps\Bois1_Dan.sqf"; // Activation
+   [] ExecVM "Maps\DeadCastle_Dan.sqf"; // Activation
+   [] ExecVM "Maps\Dubrovka_Detruit.sqf"; // Activation
+   [] ExecVM "Maps\LieuxditPenduAto.sqf"; // Activation
+   [] ExecVM "Maps\skal.sqf"; // Activation
+   [] ExecVM "Maps\oilfieldsbase.sqf"; // Activation
+   [] ExecVM "Maps\balota.sqf"; // Activation
+   [] ExecVM "Maps\berezino.sqf"; // Activation
+   [] ExecVM "Maps\cherno_base.sqf"; // Activation
+   [] ExecVM "Maps\dichina.sqf"; // Activation
+   [] ExecVM "Maps\klen.sqf"; // Activation
+   [] ExecVM "Maps\last_stand.sqf"; // Activation
+   [] ExecVM "Maps\ne_airstrip.sqf"; // Activation
+   [] ExecVM "Maps\nw_airstrip.sqf"; // Activation
+   [] ExecVM "Maps\stary.sqf"; // Activation
+   [] ExecVM "Maps\NovyLugBase.sqf"; // Activation
+   [] ExecVM "Maps\lopatino.sqf"; // Activation
+   [] ExecVM "Maps\excelsior.sqf"; // Activation
+   [] ExecVM "Maps\train_wreck.sqf"; // Activation
+   [] ExecVM "Maps\kamenka_v2.sqf"; // Activation
 
 sleep 20;
 //////////BUILDINGS//////////
@@ -132,3 +161,11 @@ call compile preprocessfile "addons\SHK_pos\shk_pos_init.sqf";
 [[11251.543,4283.1758,0.001],150] execVM "custom\SAR_nuke_zeds2.sqf";
 
 dayz_spawnCrashSite_clutterCutter=2; // helicrash spawn... 0: loot hidden in grass, 1: loot lifted, 2: no grass
+
+//##UID Based Custom Spawn Locations##
+p2_newspawn = compile preprocessFileLineNumbers "fixes\newspawn.sqf";
+waitUntil {!isNil ("dayzLoginRecord")};
+if (dayzPlayerLogin2 select 2) then
+{
+    player spawn p2_newspawn;
+};

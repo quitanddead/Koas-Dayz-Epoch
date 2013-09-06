@@ -477,3 +477,54 @@ if((speed player <= 1) && hasSecondary && _canDo) then {
 };
  
 // ---------------------------------------SUICIDE END------------------------------------
+if ((speed player <= 1) && !_isAlive && _canDo and (player distance cursorTarget < 3)) then {
+    if (s_player_makePLBomb < 0) then {
+        s_player_makePLBomb = player addAction [("<t color=""#c30000"">" + ("Booby trap the body?") +"</t>"),"Scripts\SetBodyBomb.sqf","",5,false,true,"",""];
+    };
+} else {
+    player removeAction s_player_makePLBomb;
+    s_player_makePLBomb = -1;
+}; /*  Create by MattL. Places a bomb on a players body */
+
+// AMMO PRESS ON
+    if (cursorTarget isKindOf "Land_Ind_Stack_Big" && ("PartGeneric" in magazines player) and (player distance cursorTarget < 8) and _canDo) then {
+            if (s_player_pressfn < 0) then {
+            s_player_pressfn = player addAction ["Activate Ammo Press (FAL Mags)","scripts\fnmag.sqf",cursorTarget, 5, false, true, "",""];
+        };
+    } else {
+        player removeAction s_player_pressfn;
+        s_player_pressfn = -1;
+    };
+    if (cursorTarget isKindOf "Land_Ind_Stack_Big" && ("PartGeneric" in magazines player) and (player distance cursorTarget < 8) and _canDo) then {
+            if (s_player_pressstn < 0) then {
+            s_player_pressstn = player addAction ["Activate Ammo Press (STNAG Mags)","scripts\stnagmag.sqf",cursorTarget, 5, false, true, "",""];
+        };
+    } else {
+        player removeAction s_player_pressstn;
+        s_player_pressstn = -1;
+    };
+    if (cursorTarget isKindOf "Land_Ind_Stack_Big" && ("PartGeneric" in magazines player) and (player distance cursorTarget < 8) and _canDo) then {
+            if (s_player_pressAKM < 0) then {
+            s_player_pressAKM = player addAction ["Activate Ammo Press (AKM Mags)","scripts\AKMMag.sqf",cursorTarget, 5, false, true, "",""];
+        };
+    } else {
+        player removeAction s_player_pressAKM;
+        s_player_pressAKM = -1;
+    };
+    if (cursorTarget isKindOf "Land_Ind_Stack_Big" && ("PartGeneric" in magazines player) and (player distance cursorTarget < 8) and _canDo) then {
+            if (s_player_pressAK < 0) then {
+            s_player_pressAK = player addAction ["Activate Ammo Press (AK Mags)","scripts\AKMag.sqf",cursorTarget, 5, false, true, "",""];
+        };
+    } else {
+        player removeAction s_player_pressAK;
+        s_player_pressAK = -1;
+    };
+    if (cursorTarget isKindOf "Land_Ind_Stack_Big" && ("PartGeneric" in magazines player) and (player distance cursorTarget < 8) and _canDo) then {
+            if (s_player_pressDMR < 0) then {
+            s_player_pressDMR = player addAction ["Activate Ammo Press (DMR Mags)","scripts\DMRmag.sqf",cursorTarget, 5, false, true, "",""];
+        };
+    } else {
+        player removeAction s_player_pressDMR;
+        s_player_pressDMR = -1;
+    };  
+// AMMO PRESS OFF    
