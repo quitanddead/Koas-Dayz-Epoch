@@ -3,64 +3,58 @@ _crate2 = _this select 0;
 clearWeaponCargoGlobal _crate2;
 clearMagazineCargoGlobal _crate2;
 
-_ammoCrateClasses=floor(random 4);
+_ammoQuant = ceil(random 7);
+_ammoCrateClasses=floor(random 5);
 switch (_ammoCrateClasses) do
 {
-  case 0: {_crate2 addWeaponCargoGlobal ["ItemToolbox", 1];};
-  case 1: {_crate2 addWeaponCargoGlobal ["glock17_EP1", 1];};
-  case 2: {_crate2 addWeaponCargoGlobal ["M4A1_AIM_SD_camo", 1];};
-  case 3: {_crate2 addWeaponCargoGlobal ["M4A1_HWS_GL_SD_Camo", 1];};
+  case 0: 
+  {
+  _crate addWeaponCargoGlobal ["ItemToolbox", 1];
+  _crate addWeaponCargoGlobal ["ItemMap", 1];
+  _crate addWeaponCargoGlobal ["M9SD", 1];
+  _crate addMagazineCargoGlobal ["15Rnd_9x19_M9SD", _ammoQuant];
+  _crate addWeaponCargoGlobal ["M4A1_RCO_GL", 1];
+  _crate addMagazineCargoGlobal ["30Rnd_556x45_Stanag", _ammoQuant];
+  _crate addBackpackCargoGlobal ['DZ_Assault_Pack_EP1', 1];
+  };
+  case 1: 
+  {
+  _crate addWeaponCargoGlobal ["ItemToolbox", 1];
+  _crate addWeaponCargoGlobal ["ItemMap", 1];
+  _crate addWeaponCargoGlobal ["MakarovSD", 1];
+  _crate addMagazineCargoGlobal ["8Rnd_9x18_MakarovSD", _ammoQuant];
+  _crate addWeaponCargoGlobal ["M16A4_GL", 1];
+  _crate addMagazineCargoGlobal ["30Rnd_556x45_Stanag", _ammoQuant];
+  _crate addBackpackCargoGlobal ['DZ_LargeGunBag_EP1', 1];
+  };
+  case 2: 
+  {
+  _crate addWeaponCargoGlobal ["ItemToolbox", 1];
+  _crate addWeaponCargoGlobal ["ItemMap", 1];
+  _crate addWeaponCargoGlobal ["M9SD", 1];
+  _crate addMagazineCargoGlobal ["15Rnd_9x19_M9SD", _ammoQuant];
+  _crate addWeaponCargoGlobal ["SVD_CAMO", 2];
+  _crate addMagazineCargoGlobal ["10Rnd_762x54_SVD", _ammoQuant];
+  _crate addBackpackCargoGlobal ['DZ_TerminalPack_EP1', 1];
+  };
+  case 3: 
+  {
+  _crate addWeaponCargoGlobal ["ItemToolbox", 1];
+  _crate addWeaponCargoGlobal ["ItemMap", 1];
+  _crate addWeaponCargoGlobal ["MakarovSD", 1];
+  _crate addMagazineCargoGlobal ["8Rnd_9x18_MakarovSD", _ammoQuant];
+  _crate addWeaponCargoGlobal ["RPK_74", 1];
+  _crate addMagazineCargoGlobal ["75Rnd_545x39_RPK", _ammoQuant];
+  _crate addBackpackCargoGlobal ['DZ_British_ACU', 1];
+  };
+  case 4: 
+  {
+  _crate addWeaponCargoGlobal ["ItemToolbox", 1];
+  _crate addWeaponCargoGlobal ["ItemMap", 1];
+  _crate addWeaponCargoGlobal ["M9SD", 1];
+  _crate addMagazineCargoGlobal ["15Rnd_9x19_M9SD", _ammoQuant];
+  _crate addWeaponCargoGlobal ["M4SPR", 1];
+  _crate addMagazineCargoGlobal ["30Rnd_556x45_Stanag", _ammoQuant];
+  _crate addBackpackCargoGlobal ['CZ_VestPouch_EP1', 1];
+  };
 };
-/*
-_crate2 addWeaponCargoGlobal ["ItemToolbox", 1];
-
-_crate2 addWeaponCargoGlobal ["ItemMatchbox", 1];
-
-
-_crate2 addWeaponCargoGlobal ["glock17_EP1", 1];
-
-_crate2 addWeaponCargoGlobal ["MakarovSD", 1];
-
-
-_crate2 addMagazineCargoGlobal ["17Rnd_9x19_glock17", 3];
-
-_crate2 addMagazineCargoGlobal ["8Rnd_9x18_MakarovSD", 3];
-
-
-
-//_crate2 addWeaponCargoGlobal ["M4A1_RCO_GL", 1];
-
-_crate2 addWeaponCargoGlobal ["M16A4_GL", 1];
-
-//_crate2 addWeaponCargoGlobal ["M4A3_CCO_EP1", 1];
-
-_crate2 addWeaponCargoGlobal ["M4SPR", 1];
-
-//_crate2 addWeaponCargoGlobal ["RPK_74", 1];
-
-_crate2 addWeaponCargoGlobal ["SVD", 1];
-
-_crate2 addBackpackCargoGlobal ['DZ_Backpack_EP1', 1];
-
-
-
-_crate2 addMagazineCargoGlobal ["30Rnd_545x39_AKSD", 3];
-
-_crate2 addMagazineCargoGlobal ["30Rnd_762x39_AK47", 3];
-
-_crate2 addMagazineCargoGlobal ["30Rnd_556x45_Stanag", 3];
-
-_crate2 addMagazineCargoGlobal ["30Rnd_556x45_StanagSD", 3];
-
-_crate2 addMagazineCargoGlobal ["75Rnd_545x39_RPK", 3];
-
-_crate2 addMagazineCargoGlobal ["10Rnd_762x54_SVD", 3];
-
-
-//_crate addMagazineCargoGlobal ["1Rnd_SmokeRed_M203", 10];
-
-//_crate addMagazineCargoGlobal ["1Rnd_SmokeGreen_M203", 10];
-
-//_crate addMagazineCargoGlobal ["1Rnd_Smoke_M203", 10];
-
-*/
