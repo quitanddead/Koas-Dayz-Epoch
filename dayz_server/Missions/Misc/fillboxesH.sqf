@@ -4,7 +4,7 @@ clearWeaponCargoGlobal _crate3;
 clearMagazineCargoGlobal _crate3;
 
 
-_ammoQuant = ceil(random 7);
+_ammoQuant = (ceil(random 5) + 2);
 _ammoCrateClasses=floor(random 5);
 switch (_ammoCrateClasses) do
 {

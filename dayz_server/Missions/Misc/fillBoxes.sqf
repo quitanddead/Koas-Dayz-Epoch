@@ -3,7 +3,7 @@ _crate = _this select 0;
 clearWeaponCargoGlobal _crate;
 clearMagazineCargoGlobal _crate;
 
-_ammoQuant = ceil(random 7);
+_ammoQuant = (ceil(random 5) + 2);
 _ammoCrateClasses=floor(random 5);
 switch (_ammoCrateClasses) do
 {
