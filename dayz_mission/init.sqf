@@ -161,15 +161,4 @@ dayz_spawnCrashSite_clutterCutter=2; // helicrash spawn... 0: loot hidden in gra
 
 [] ExecVM "Maps\sector_ubf.sqf";
 [] ExecVM "Maps\safezone.sqf"
-//[] ExecVM "custom\custom_monitor.sqf";
-
-/////////////// DAYZ OF GLORY MOD //////////////////////////////////
-// DayZ of Glory Mod By Sporkulus //////////////////////////////////
-Use_spork = true; //turn this false to disable sporks whole mod.
-AdminList = ["######", "######"]; //add admin uids here
-[] execvm "@DayZofDuty\dod\settings.sqf";
-[] execvm "@DayZofDuty\dod\Level_addons.sqf";
-[Use_spork,AdminList] execvm "@DayZofDuty\dod\debug.sqf";
-[Use_spork,AdminList] execvm "@DayZofDuty\dod\debug2.sqf";
-[Use_spork,AdminList] execvm "@DayZofDuty\dod\debug3.sqf";
-////////////////////////end of code ///////////////////////////////
+[] ExecVM "custom\custom_monitor.sqf";
