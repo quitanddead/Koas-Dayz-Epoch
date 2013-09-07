@@ -3,7 +3,15 @@ _crate2 = _this select 0;
 clearWeaponCargoGlobal _crate2;
 clearMagazineCargoGlobal _crate2;
 
-
+_ammoCrateClasses=floor(random 4);
+switch (_ammoCrateClasses) do
+{
+  case 0: {_crate2 addWeaponCargoGlobal ["ItemToolbox", 1];};
+  case 1: {_crate2 addWeaponCargoGlobal ["glock17_EP1", 1];};
+  case 2: {_crate2 addWeaponCargoGlobal ["M4A1_AIM_SD_camo", 1];};
+  case 3: {_crate2 addWeaponCargoGlobal ["M4A1_HWS_GL_SD_Camo", 1];};
+};
+/*
 _crate2 addWeaponCargoGlobal ["ItemToolbox", 1];
 
 _crate2 addWeaponCargoGlobal ["ItemMatchbox", 1];
@@ -55,4 +63,4 @@ _crate2 addMagazineCargoGlobal ["10Rnd_762x54_SVD", 3];
 
 //_crate addMagazineCargoGlobal ["1Rnd_Smoke_M203", 10];
 
-
+*/
