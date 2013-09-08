@@ -29,6 +29,11 @@ dayz_maxLocalZombies = 30; // Default = 30
 EpochEvents = [["any","any","any","any",30,"crash_spawner"],["any","any","any","any",0,"crash_spawner"]];
 dayz_fullMoonNights = true;
 
+DefaultMagazines = ["ItemBandage","ItemBandage","7Rnd_45ACP_1911","ItemPainkiller","ItemMorphine"]; 
+DefaultWeapons = ["Colt1911","ItemFlashlightRed","Binocular","ItemKnife","ItemMap"]; 
+DefaultBackpack = "DZ_Assault_Pack_EP1"; 
+DefaultBackpackWeapon = "";
+
 //Load in compiled functions
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\variables.sqf";				//Initilize the Variables (IMPORTANT: Must happen very early)
 progressLoadingScreen 0.1;
