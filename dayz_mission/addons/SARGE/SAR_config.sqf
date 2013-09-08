@@ -294,8 +294,8 @@ SAR_soldier_surv_list = ["Bandit1_DZ", "BanditW1_DZ","Soldier_Crew_PMC","Camo1_D
 // Leader
 SAR_leader_sold_skills = [
 
-    ["aimingAccuracy",0.45, 0.10], // skilltype, <min value>, <random value added to min>;
-    ["aimingShake",   0.45, 0.10],
+    ["aimingAccuracy",0.35, 0.10], // skilltype, <min value>, <random value added to min>;
+    ["aimingShake",   0.35, 0.10],
     ["aimingSpeed",   0.80, 0.20],
     ["spotDistance",  0.70, 0.30],
     ["spotTime",      0.65, 0.20],
@@ -310,8 +310,8 @@ SAR_leader_sold_skills = [
 // rifleman
 SAR_soldier_sold_skills  = [
 
-    ["aimingAccuracy",0.45, 0.10], // skilltype, <min value>, <random value added to min>;
-    ["aimingShake",   0.45, 0.10],
+    ["aimingAccuracy",0.25, 0.10], // skilltype, <min value>, <random value added to min>;
+    ["aimingShake",   0.25, 0.10],
     ["aimingSpeed",   0.70, 0.20],
     ["spotDistance",  0.55, 0.30],
     ["spotTime",      0.30, 0.20],
@@ -361,8 +361,8 @@ SAR_leader_band_skills = [
 // Rifleman
 SAR_soldier_band_skills = [
 
-    ["aimingAccuracy",0.35, 0.10], // skilltype, <min value>, <random value added to min>;
-    ["aimingShake",   0.35, 0.10],
+    ["aimingAccuracy",0.15, 0.10], // skilltype, <min value>, <random value added to min>;
+    ["aimingShake",   0.15, 0.10],
     ["aimingSpeed",   0.60, 0.20],
     ["spotDistance",  0.40, 0.20],
     ["spotTime",      0.40, 0.20],
@@ -396,8 +396,8 @@ SAR_sniper_band_skills = [
 // Leader
 SAR_leader_surv_skills = [
 
-    ["aimingAccuracy",0.45, 0.10], // skilltype, <min value>, <random value added to min>;
-    ["aimingShake",   0.45, 0.10],
+    ["aimingAccuracy",0.35, 0.10], // skilltype, <min value>, <random value added to min>;
+    ["aimingShake",   0.35, 0.10],
     ["aimingSpeed",   0.60, 0.20],
     ["spotDistance",  0.40, 0.30],
     ["spotTime",      0.45, 0.20],
@@ -411,11 +411,11 @@ SAR_leader_surv_skills = [
 // Rifleman
 SAR_soldier_surv_skills = [
 
-    ["aimingAccuracy",0.35, 0.10], // skilltype, <min value>, <random value added to min>;
-    ["aimingShake",   0.35, 0.10],
+    ["aimingAccuracy",0.15, 0.10], // skilltype, <min value>, <random value added to min>;
+    ["aimingShake",   0.15, 0.10],
     ["aimingSpeed",   0.60, 0.20],
     ["spotDistance",  0.45, 0.30],
-    ["spotTime",      0.40, 0.20],
+    ["spotTime",      0.20, 0.20],
     ["endurance",     0.40, 0.20],
     ["courage",       0.40, 0.20],
     ["reloadSpeed",   0.40, 0.20],
@@ -446,353 +446,88 @@ SAR_sniper_surv_skills = [
 
 // a general note: you CAN use either rifles OR pistols. Do not use both. AI will get stuck after switching weapons.
 
-//
 // military
-//
 
 // potential weapon list for leaders
-SAR_sold_leader_weapon_list = [
-"M4A3_CCO_EP1",
-"M8_carbine",
-"M16A4_ACG",
-"m8_compact",
-"SCAR_H_CQC_CCO",
-"G36K",
-"G36A_camo",
-"M14_EP1"
-];
-
+SAR_sold_leader_weapon_list = ["G36_C_SD_camo","M4A3_CCO_EP1","AK_47_M"];
 SAR_sold_leader_pistol_list = [];   
 
 // potential item list for leaders -> Item / Chance 1 - 100
-
-SAR_sold_leader_items = [
-["ItemWaterbottle",20],
-["ItemBandage",75],
-["FoodMRE",60],
-["fuel_pump_kit",5],
-["Skin_Rocket_DZ",60],
-["ItemMorphine",60],
-["ItemPainkiller",60],
-["ItemHeatPack",60]
-];
-
-SAR_sold_leader_tools =  [
-["ItemMap",80],
-["ItemCompass",50],
-["ItemKnife",50],
-["ItemFlashlightRed",50],
-["Binocular",75],
-["NVGoggles",10],
-["ItemEtool",5],
-["ItemWatch",100],
-["ItemRadio",100],
-["ItemGPS",20]
-];
+SAR_sold_leader_items = [["ItemSodaCoke",75],["FoodCanBakedBeans",60]];
+SAR_sold_leader_tools =  [["ItemMap",50],["ItemCompass",30],["Binocular_Vector",5],["NVGoggles",5],["ItemRadio",100]];
 
 //potential weapon list for riflemen
-
-SAR_sold_rifleman_weapon_list = [
-"M4A1",
-"M16A2",
-"G36C",
-"SCAR_L_CQC",
-"Mk_48_DZ"
-];
+SAR_sold_rifleman_weapon_list = ["M16A2","Winchester1866","AK_74","LeeEnfield","M1014"];
 SAR_sold_rifleman_pistol_list = [];    
 
 // potential item list for riflemen
-
-SAR_sold_rifleman_items = [
-["ItemWaterbottle",20],
-["ItemBandage",75],
-["FoodMRE",60],
-["HandChemGreen",60],
-["ItemSandbag",5],
-["Skin_Graves_Light_DZ",7],
-["Skin_FR_Rodriguez_DZ",7],
-["Skin_FR_OHara_DZ",7],
-["Skin_Drake_Light_DZ",7],
-["Skin_CZ_Special_Forces_GL_DES_EP1_DZ",7],
-["Skin_Camo1_DZ",7],
-["Skin_Soldier1_DZ",7],
-["HandRoadFlare",60],
-["HandGrenade_West",10]
-];
-
-SAR_sold_rifleman_tools = [
-["ItemToolbox",50],
-["ItemCompass",30],
-["ItemWatch",100],
-["ItemEtool",35],
-["ItemKnife",50],
-["ItemMatchbox",50]
-];
+SAR_sold_rifleman_items = [["ItemSodaCoke",75],["FoodCanBakedBeans",60]];
+SAR_sold_rifleman_tools = [["ItemMap",50],["ItemCompass",30]];
 
 //potential weapon list for snipers
-
-SAR_sold_sniper_weapon_list = [
-"M24",
-"M4SPR",
-"M40A3",
-"SCAR_H_LNG_Sniper",
-"DMR",
-"BAF_LRR_scoped",
-"m8_sharpshooter"
-];
-
+SAR_sold_sniper_weapon_list = ["DMR","SVD_CAMO","M40A3"];
 SAR_sold_sniper_pistol_list = [];   
 
 // potential item list for snipers
-
-SAR_sold_sniper_items = [
-["ItemWaterbottle",20],
-["ItemBandage",75],
-["FoodMRE",60],
-["ItemWaterbottleUnfilled",60],
-["ItemMorphine",60],
-["ItemPainkiller",60],
-["forest_net_kit",15],
-["Skin_Sniper1_DZ",30],
-["Skin_CZ_Soldier_Sniper_EP1_DZ",30],
-["ItemHeatPack",70]
-];
-
-SAR_sold_sniper_tools = [
-["ItemMap",50],
-["ItemCompass",100],
-["ItemKnife",60],
-["ItemWatch",100],
-["NVGoggles",35],
-["Binocular_Vector",75]
-];
+SAR_sold_sniper_items = [["ItemSodaCoke",75],["FoodCanBakedBeans",60],["Skin_Sniper1_DZ",10]];
+SAR_sold_sniper_tools = [["ItemMap",50],["ItemCompass",30]];
 
 //
 // survivors
 //
 
 // potential weapon list for leaders
-
-SAR_surv_leader_weapon_list = [
-"M4A1_Aim",
-"M16A4_ACG",
-"M14_EP1",
-"G36K",
-"Sa58V_RCO_EP1",
-"AK_107_kobra"
-];
-
+SAR_surv_leader_weapon_list = ["M4A1","M4A3_CCO_EP1","AK_47_M"];
 SAR_surv_leader_pistol_list = [];   
 
 // potential item list for leaders -> Item / Chance 1 - 100
-
-SAR_surv_leader_items = [
-["ItemSodaCoke",75],
-["ItemBandage",75],
-["FoodCanBakedBeans",60],
-["Skin_Soldier_Bodyguard_AA12_PMC_DZ",30],
-["Skin_Soldier_TL_PMC_DZ",30],
-["ItemAntibiotic",20],
-["ItemSodaMdew",10],
-["ItemBriefcaseEmpty",10]
-];
-
-SAR_surv_leader_tools =  [
-["ItemMap",50],
-["ItemCompass",60],
-["Binocular",55],
-["NVGoggles",5],
-["ItemGPS",10],
-["ItemRadio",100],
-["ItemWatch",100]
-];
+SAR_surv_leader_items = [["ItemSodaCoke",75],["FoodCanBakedBeans",60]];
+SAR_surv_leader_tools =  [["ItemMap",50],["ItemCompass",30],["Binocular_Vector",5],["NVGoggles",5],["ItemRadio",100]];
 
 //potential weapon list for riflemen
-
-SAR_surv_rifleman_weapon_list = [
-"AK_74",
-"M4A1",
-"M16A2",
-"Sa58P_EP1",
-"FN_FAL",
-"M240_DZ",
-"LeeEnfield"
-];
+SAR_surv_rifleman_weapon_list = ["M16A2","Winchester1866","AK_74","LeeEnfield","M1014"];
 SAR_surv_rifleman_pistol_list = [];    
 
 // potential item list for riflemen
-
-SAR_surv_rifleman_items = [
-["ItemSodaCoke",75],
-["ItemBandage",75],
-["FoodCanSardines",30],
-["ItemAntibiotic",5],
-["ItemLightBulb",5],
-["Skin_SurvivorWcombat_DZ",12],
-["Skin_SurvivorWdesert_DZ",12],
-["Skin_RU_Policeman_DZ",12],
-["Skin_Pilot_EP1_DZ",12],
-["Skin_Haris_Press_EP1_DZ",12],
-["ItemBloodbag",5],
-["ItemPainkiller",10],
-["ItemTent",15]
-];
-
-SAR_surv_rifleman_tools = [
-["ItemMap",50],
-["ItemCompass",30],
-["ItemFishingPole",30],
-["ItemWatch",100]
-];
+SAR_surv_rifleman_items = [["ItemSodaCoke",75],["FoodCanBakedBeans",60]];
+SAR_surv_rifleman_tools = [["ItemMap",50],["ItemCompass",30]];
 
 //potential weapon list for snipers
-
-SAR_surv_sniper_weapon_list = [
-"AKS_74_pso",
-"Huntingrifle",
-"SVD",
-"M4SPR",
-"DMR",
-"M24"
-];
-
+SAR_surv_sniper_weapon_list = ["M4A1_Aim","SVD_CAMO","Huntingrifle"];
 SAR_surv_sniper_pistol_list = [];   
 
 // potential item list for snipers
-
-SAR_surv_sniper_items = [
-["ItemSodaCoke",75],
-["ItemBandage",75],
-["FoodCanPasta",60],
-["Skin_Soldier_Sniper_PMC_DZ",60],
-["ItemCanvas",5],
-["forest_net_kit",5],
-["ItemBurlap",5]
-];
-
-SAR_surv_sniper_tools = [
-["ItemMap",50],
-["ItemCompass",30],
-["ItemEtool",30],
-["NVGoggles",25],
-["ItemWatch",100],
-["Binocular_Vector",50]
-];
+SAR_surv_sniper_items = [["ItemSodaCoke",75],["FoodCanBakedBeans",60],["Skin_Sniper1_DZ",10]];
+SAR_surv_sniper_tools = [["ItemMap",50],["ItemCompass",30]];
 
 //
 // bandits
 //
 
 // potential weapon list for leaders
-
-SAR_band_leader_weapon_list = [
-"Sa58V_RCO_EP1",
-"AKS_74_kobra",
-"AK_107_kobra",
-"Sa58V_CCO_EP1"
-];
-
+SAR_band_leader_weapon_list = ["G36_C_SD_camo","M4A3_CCO_EP1","AK_47_M"];
 SAR_band_leader_pistol_list = [];   
 
 // potential item list for leaders -> Item / Chance 1 - 100
-
-SAR_band_leader_items = [
-["ItemWaterbottle",20],
-["ItemBandage",75],
-["ItemSeaBassCooked",60],
-["ItemGoldBar",60],
-["ItemSodaXdrink",5],
-["Skin_TK_INS_Warlord_EP1_DZ",30],
-["Skin_GUE_Commander_DZ",30],
-["SmokeShellRed",60]
-];
-
-SAR_band_leader_tools =  [
-["ItemMap",100],
-["ItemKnife",60],
-["Binocular",50],
-["NVGoggles",5],
-["ItemKeyKit",10],
-["ItemWatch",100],
-["ItemMachete",30],
-["ItemRadio",50]
-];
+SAR_band_leader_items = [["ItemSodaCoke",75],["FoodCanBakedBeans",60]];
+SAR_band_leader_tools =  [["ItemMap",50],["ItemCompass",30],["Binocular_Vector",5],["NVGoggles",5],["ItemRadio",100]];
 
 //potential weapon list for riflemen
-
-SAR_band_rifleman_weapon_list = [];
-
-SAR_band_rifleman_pistol_list = [
-"AK_47_S",
-"AK_47_M",
-"AK_74",
-"FN_FAL",
-"AKS_74_U",
-"Sa58V_EP1",
-"Pecheneg_DZ",
-"LeeEnfield"
-];    
+SAR_band_rifleman_weapon_list = ["M16A2","Winchester1866","AK_74","LeeEnfield","M1014"];
+SAR_band_rifleman_pistol_list = [];    
 
 // potential item list for riflemen
-
-SAR_band_rifleman_items = [
-["ItemSodaCoke",75],
-["ItemBandage",75],
-["FoodmuttonCooked",60],
-["ItemSilverBar",60],
-["ItemBurlap",5],
-["Skin_Ins_Soldier_GL_DZ",7],
-["Skin_GUE_Soldier_Crew_DZ",7],
-["Skin_GUE_Soldier_CO_DZ",7],
-["Skin_GUE_Soldier_2_DZ",7],
-["Skin_BanditW2_DZ",7],
-["Skin_BanditW1_DZ",7],
-["Skin_Bandit1_DZ",7],
-["Skin_Bandit2_DZ",7],
-["Skin_TK_INS_Soldier_EP1_DZ",7],
-["ItemTankTrap",5]
-];
-
-SAR_band_rifleman_tools = [
-["ItemWatch",100],
-["ItemCrowbar",30],
-["ItemMatchbox",50],
-["ItemKnife",60]
-];
+SAR_band_rifleman_items = [["ItemSodaCoke",75],["FoodCanBakedBeans",60]];
+SAR_band_rifleman_tools = [["ItemMap",50],["ItemCompass",30],["Binocular_Vector",2]];
 
 //potential weapon list for snipers
-
-SAR_band_sniper_weapon_list = [
-"AK_107_pso",
-"SVD",
-"SVD_CAMO",
-"AKS_74_pso",
-"Huntingrifle"
-];
-
+SAR_band_sniper_weapon_list = ["DMR","SVD_CAMO","M40A3"];
 SAR_band_sniper_pistol_list = [];   
 
 // potential item list for snipers
+SAR_band_sniper_items = [["ItemSodaCoke",75],["FoodCanBakedBeans",60],["Skin_Sniper1_DZ",100]];
+SAR_band_sniper_tools = [["ItemMap",50],["ItemCompass",30],["Binocular_Vector",10],["ItemFlashlight",100]];
 
-SAR_band_sniper_items = [
-["ItemSodaCoke",75],
-["ItemBandage",75],
-["ItemSilverBar10oz",60],
-["FoodchickenCooked",60],
-["forest_net_kit",5],
-["Skin_GUE_Soldier_Sniper_DZ",60],
-["PipeBomb",1]
-];
-
-SAR_band_sniper_tools = [
-["ItemMap",50],
-["ItemCompass",50],
-["Binocular_Vector",55],
-["ItemFlashlightRed",20],
-["ItemWatch",100],
-["NVGoggles",15],
-["ItemKnife",60]
-];
 
 // ---------------------------------------------------------------------------------------------------------------------
 // heli patrol definiton
