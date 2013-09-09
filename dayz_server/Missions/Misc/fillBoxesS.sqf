@@ -124,7 +124,7 @@ while{_primecount < _numPrim} do
 		_probability = (_primaryWeapons select _i) select 1;
 		_ammo = (_primaryWeapons select _i) select 2;
 		_chance = (random 100);
-		if(_chance < _probability) then {
+		if((_chance < _probability) && (_primecount < _numPrim)) then {
 			_crate2 addWeaponCargoGlobal [_item, 1];
 			_crate2 addMagazineCargoGlobal [_ammo, _ammoQuant];
 			_primecount = _primecount + 1;			
